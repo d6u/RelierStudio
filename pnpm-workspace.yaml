@@ -1,0 +1,5 @@
+packages:
+  - "packages/*"
+  - "ui"
+  - "app-desktop"
+  - "app-web-frontend"

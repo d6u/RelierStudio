@@ -1,0 +1,23 @@
+{
+  "name": "canvas-data-unified",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "exports": {
+    "ts": "./src/index.ts",
+    "types": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "clean": "rm -rf dist",
+    "gencode": "pnpm run '/^gencode:/'",
+    "build:ts": "rm -rf dist && tsc -b"
+  },
+  "dependencies": {
+    "canvas-config-definitions": "workspace:^",
+    "canvas-data-base": "workspace:^",
+    "canvas-data-node-definitions": "workspace:^",
+    "fp-ts": "^2.16.5"
+  }
+}

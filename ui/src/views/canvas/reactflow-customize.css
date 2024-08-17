@@ -1,0 +1,54 @@
+/* Node styles */
+
+/* Reset reactflow's default node style */
+.react-flow__node {
+  width: initial;
+  border: initial;
+  padding: initial;
+  text-align: initial;
+  background-color: initial;
+  color: initial;
+  font-size: initial;
+}
+
+/* Remove black border after selected */
+.react-flow__node.selectable.selected,
+.react-flow__node.selectable.selected:focus {
+  box-shadow: initial;
+}
+
+.react-flow__node.selectable:focus,
+.react-flow__node.selectable.selected:hover {
+  /* This is the default style from reactflow */
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.08);
+}
+
+.react-flow__node {
+  /* Match with CanvasNode */
+  border-radius: 6px;
+}
+
+/* Edge styles */
+
+.react-flow__edge-path {
+  stroke-width: 2px;
+}
+
+.react-flow__edge-condition .react-flow__edge-path {
+  stroke: var(--canvas-handle-condition-color-light);
+}
+
+/* :focus style is active when mouse down but before release */
+.react-flow__edge-condition.selected .react-flow__edge-path,
+.react-flow__edge-condition:focus .react-flow__edge-path {
+  stroke: var(--canvas-handle-condition-color-heavy);
+}
+
+.react-flow__edge-variable .react-flow__edge-path {
+  stroke: var(--canvas-handle-variable-color-light);
+}
+
+.react-flow__edge-variable.selected .react-flow__edge-path,
+.react-flow__edge-variable:focus .react-flow__edge-path {
+  stroke: var(--canvas-handle-variable-color-heavy);
+}

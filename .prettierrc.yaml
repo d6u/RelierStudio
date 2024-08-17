@@ -1,0 +1,10 @@
+singleQuote: true
+quoteProps: consistent
+plugins:
+  - "@trivago/prettier-plugin-sort-imports"
+importOrder:
+  - "^(common-tsconfig|common-utils|database-models|dynamodb-models|flow-models|graph-util|integrations|run-flow|(canvas-data.*)|(canvas-config.*)|(ui$))"
+  - "^@front"
+  - "^[./]"
+importOrderSeparation: true
+importOrderSortSpecifiers: true
