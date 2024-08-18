@@ -24,3 +24,7 @@ release
 *.njsproj
 *.sln
 *.sw?
+
+# --- Electron Artifacts ---
+
+!build

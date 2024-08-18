@@ -22,10 +22,10 @@ export function updateNodeConfigInputVariableIds(
   const nodeConfig = canvasDataDraft.nodeConfigs[nodeId];
 
   nodeConfig.inputVariableIds =
-    collectAllVariableIdsFromActiveFieldConfigs(nodeConfig);
+    collectAllInputVariableIdsFromActiveFieldConfigs(nodeConfig);
 }
 
-function collectAllVariableIdsFromActiveFieldConfigs(
+function collectAllInputVariableIdsFromActiveFieldConfigs(
   nodeConfig: NodeConfig,
 ): string[] {
   const nodeDef = NODE_DEFINITIONS[nodeConfig.type];
@@ -83,6 +83,7 @@ function collectAllVariableIdsFromActiveFieldConfigs(
       case NodeConfigFieldType.CanvasConfig:
       case NodeConfigFieldType.StopSequence:
       case NodeConfigFieldType.SubroutineStartSelect:
+      case NodeConfigFieldType.TextareasWithOutputVariables:
         break;
     }
   }

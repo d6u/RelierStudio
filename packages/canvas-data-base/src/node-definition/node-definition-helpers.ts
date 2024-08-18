@@ -2,7 +2,10 @@ import copy from 'fast-copy';
 
 import randomId from 'common-utils/randomId';
 
-import { NodeConfigFieldType } from '../field-definition-types';
+import {
+  NodeConfigFieldType,
+  type TextareasWithOutputVariablesConfigValue,
+} from '../field-definition-types';
 import { NodeConfigBase } from './node-config-base-schema-and-type';
 import {
   type NodeDefinition,
@@ -55,19 +58,31 @@ export function generateCreateDefaultNodeConfigFunction<
         case NodeConfigFieldType.InputVariableList:
           fieldConfigs.push({ variableIds: [] });
           break;
-        case NodeConfigFieldType.LlmMessages:
+        case NodeConfigFieldType.LlmMessages: {
           const defaultValue = copy(option.defaultValue);
           defaultValue.messages.forEach((msg) => {
             msg.id = randomId();
           });
           fieldConfigs.push(defaultValue);
           break;
+        }
         case NodeConfigFieldType.CanvasConfig:
           fieldConfigs.push({});
           break;
         case NodeConfigFieldType.SubroutineStartSelect:
           fieldConfigs.push({ nodeId: null });
           break;
+        case NodeConfigFieldType.TextareasWithOutputVariables: {
+          const value: TextareasWithOutputVariablesConfigValue[] =
+            option.defaultTextareaValues.map((value) => ({
+              string: value,
+              // NOTE: A real outputVariableId must be assigned before
+              // passing to other parts of the system.
+              outputVariableId: '',
+            }));
+          fieldConfigs.push({ value });
+          break;
+        }
         case NodeConfigFieldType.Text:
         case NodeConfigFieldType.Textarea:
         case NodeConfigFieldType.Number:

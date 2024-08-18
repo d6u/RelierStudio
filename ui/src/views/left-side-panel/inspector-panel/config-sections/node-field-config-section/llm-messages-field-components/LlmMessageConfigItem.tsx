@@ -91,14 +91,40 @@ function LlmMessageConfigItem(props: Props) {
       </div>
       {props.messageConfig.contentSourceType ===
       LlmMessageContentSource.Inline ? (
-        <Textarea
-          minRows={2}
-          placeholder="Enter message content"
-          value={props.messageConfig.contentInline}
-          onChange={(event) => {
-            props.onContentInlineChange(event.target.value);
-          }}
-        />
+        <>
+          <Textarea
+            css={css`
+              margin-bottom: 5px;
+            `}
+            minRows={2}
+            placeholder="Enter message content"
+            value={props.messageConfig.contentInline}
+            onChange={(event) => {
+              props.onContentInlineChange(event.target.value);
+            }}
+          />
+          <div
+            css={css`
+              font-family: var(--font-family);
+              font-size: 12px;
+              line-height: 1.3;
+              color: #555e68;
+            `}
+          >
+            <a
+              href="https://mustache.github.io/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Mustache template
+            </a>{' '}
+            is used here. Use triple{' '}
+            <b>
+              <code>{'{}'}</code>
+            </b>
+            , e.g. <code>{'{{{variableName}}}'}</code>, to insert a variable.
+          </div>
+        </>
       ) : (
         <NodeVariableEditorItem
           variableId={props.messageConfig.contentVariableId!}

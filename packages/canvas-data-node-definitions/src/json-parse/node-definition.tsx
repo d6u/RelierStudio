@@ -50,7 +50,7 @@ export type JsonParseNodeConfigField = JsonParseNodeConfig['fields'][FieldKey];
 export const JSON_PARSE_NODE_DEFINITION = createNodeDefinition(
   NodeKind.Process,
   'JsonParse',
-  'JSON Parse',
+  'String to JSON',
   [
     {
       kind: NodeDefinitionConfigSectionKind.Field,

@@ -17,6 +17,7 @@ import {
   type NodeConfigSubroutineStartSelectFieldConfig,
   type NodeConfigTextFieldConfig,
   type NodeConfigTextareaFieldConfig,
+  type NodeConfigTextareasWithOutputVariablesFieldConfig,
   NodeDefinitionConfigSectionKind,
 } from 'canvas-data-base';
 import {
@@ -44,7 +45,7 @@ export function nodeConfigToNodeParam(
     canvasConfigs,
     nodeConfig,
     connectors,
-    inputVariableValueFromGraphGetter: inputVariableValueGraphGetter,
+    inputVariableValueFromGraphGetter,
   } = params;
 
   const nodeDef = NODE_DEFINITIONS[nodeConfig.type];
@@ -91,7 +92,7 @@ export function nodeConfigToNodeParam(
             connector.type === ConnectorType.InputVariable,
             'Variable ID is not an Input Variable ID.',
           );
-          return inputVariableValueGraphGetter(connector);
+          return inputVariableValueFromGraphGetter(connector);
         }
         case NodeConfigFieldType.InputVariableList: {
           const variableIds = (
@@ -104,7 +105,10 @@ export function nodeConfigToNodeParam(
               connector.type === ConnectorType.InputVariable,
               'Variable ID is not an Input Variable ID.',
             );
-            return [connector.name, inputVariableValueGraphGetter(connector)];
+            return [
+              connector.name,
+              inputVariableValueFromGraphGetter(connector),
+            ];
           });
 
           return Object.fromEntries(pairs);
@@ -120,7 +124,7 @@ export function nodeConfigToNodeParam(
               'Variable ID is not an Input Variable ID.',
             );
             nameToValues[connector.name] =
-              inputVariableValueGraphGetter(connector);
+              inputVariableValueFromGraphGetter(connector);
           });
 
           return fc.messages.map((messageConfig) => {
@@ -146,7 +150,7 @@ export function nodeConfigToNodeParam(
               );
               return {
                 role: messageConfig.role,
-                content: inputVariableValueGraphGetter(connector),
+                content: inputVariableValueFromGraphGetter(connector),
               };
             }
           });
@@ -156,6 +160,13 @@ export function nodeConfigToNodeParam(
         case NodeConfigFieldType.SubroutineStartSelect:
           return (fieldConfig as NodeConfigSubroutineStartSelectFieldConfig)
             .nodeId;
+        case NodeConfigFieldType.TextareasWithOutputVariables: {
+          const entries = (
+            fieldConfig as NodeConfigTextareasWithOutputVariablesFieldConfig
+          ).value;
+
+          return entries.map((entry) => entry.string);
+        }
       }
     })();
   }

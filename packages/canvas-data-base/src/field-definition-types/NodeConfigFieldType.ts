@@ -1,16 +1,17 @@
 export enum NodeConfigFieldType {
   // Generic fields
-  Text = 'Text',
-  Textarea = 'Textarea',
+  Checkbox = 'Checkbox',
   Number = 'Number',
   Radio = 'Radio',
   Select = 'Select',
-  Checkbox = 'Checkbox',
+  Text = 'Text',
+  Textarea = 'Textarea',
   // Special fields
   CanvasConfig = 'CanvasConfig',
   InputVariable = 'InputVariable',
   InputVariableList = 'InputVariableList',
   LlmMessages = 'LlmMessages',
+  TextareasWithOutputVariables = 'TextareasWithOutputVariables',
   StopSequence = 'StopSequence',
   SubroutineStartSelect = 'SubroutineStartSelect',
 }

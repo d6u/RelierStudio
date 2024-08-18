@@ -12,22 +12,22 @@ import {
   type BingSearchApiNodeParams,
   type ChatGPTChatCompletionNodeConfigField,
   type ChatGPTChatCompletionNodeParams,
+  type ConditionsNodeConfigField,
+  type ConditionsNodeParams,
   type InputNodeConfigField,
   type InputNodeParams,
+  type JSONataTransformsNodeConfigField,
+  type JSONataTransformsNodeParams,
   type JsonParseNodeConfigField,
   type JsonParseNodeParams,
   type JsonToStringNodeConfigField,
   type JsonToStringNodeParams,
-  type JsonataConditionsNodeConfigField,
-  type JsonataConditionsNodeParams,
-  type JsonataTransformNodeConfigField,
-  type JsonataTransformNodeParams,
   type LoopBreakOrContinueNodeConfigField,
   type LoopBreakOrContinueNodeParams,
   type LoopStartNodeConfigField,
   type LoopStartNodeParams,
-  type MustacheTextTemplateNodeConfigField,
-  type MustacheTextTemplateNodeParams,
+  type MustacheTextTemplatesNodeConfigField,
+  type MustacheTextTemplatesNodeParams,
   type OllamaChatCompletionNodeConfigField,
   type OllamaChatCompletionNodeParams,
   type OutputNodeConfigField,
@@ -44,11 +44,11 @@ type NodeConfigField =
   | ChatGPTChatCompletionNodeConfigField
   | OllamaChatCompletionNodeConfigField
   | BingSearchApiNodeConfigField
-  | MustacheTextTemplateNodeConfigField
+  | MustacheTextTemplatesNodeConfigField
   | JsonParseNodeConfigField
   | JsonToStringNodeConfigField
-  | JsonataTransformNodeConfigField
-  | JsonataConditionsNodeConfigField
+  | JSONataTransformsNodeConfigField
+  | ConditionsNodeConfigField
   | BareboneLoopNodeConfigField
   | LoopStartNodeConfigField
   | LoopBreakOrContinueNodeConfigField;
@@ -85,11 +85,11 @@ export type NodeParams =
   | ChatGPTChatCompletionNodeParams
   | OllamaChatCompletionNodeParams
   | BingSearchApiNodeParams
-  | MustacheTextTemplateNodeParams
+  | MustacheTextTemplatesNodeParams
   | JsonParseNodeParams
   | JsonToStringNodeParams
-  | JsonataTransformNodeParams
-  | JsonataConditionsNodeParams
+  | JSONataTransformsNodeParams
+  | ConditionsNodeParams
   | BareboneLoopNodeParams
   | LoopStartNodeParams
   | LoopBreakOrContinueNodeParams;

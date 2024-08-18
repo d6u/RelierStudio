@@ -2,7 +2,12 @@ import { Global, css } from '@emotion/react';
 import { ThemeProvider, extendTheme } from '@mui/joy';
 import { Provider } from 'jotai';
 import { useMemo } from 'react';
-import { Navigate, RouterProvider, createHashRouter } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from 'react-router-dom';
 import 'reactflow/dist/style.css';
 
 import {
@@ -138,9 +143,18 @@ const MUI_THEME = extendTheme({
   },
 });
 
-function App() {
+type Props = {
+  // Hash router is used for Electron app
+  useHashRouter?: boolean;
+};
+
+function App(props: Props) {
   const router = useMemo(() => {
-    return createHashRouter([
+    const createRouter = props.useHashRouter
+      ? createHashRouter
+      : createBrowserRouter;
+
+    return createRouter([
       {
         path: ROOT_PATH,
         element: <RootRoute />,
@@ -165,7 +179,7 @@ function App() {
         element: <Navigate to="/" />,
       },
     ]);
-  }, []);
+  }, [props.useHashRouter]);
 
   return (
     <>

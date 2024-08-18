@@ -7,8 +7,10 @@ import {
   NodeConfigFieldType,
   type NodeConfigInputVariableFieldConfig,
   type NodeConfigLlmMessagesFieldConfig,
+  type NodeConfigTextareasWithOutputVariablesFieldConfig,
   NodeDefinitionConfigSectionKind,
   createInputVariable,
+  createOutputVariable,
 } from 'canvas-data-base';
 import { NODE_DEFINITIONS } from 'canvas-data-unified';
 import randomId from 'common-utils/randomId';
@@ -16,6 +18,7 @@ import randomId from 'common-utils/randomId';
 import { canvasDataAtom } from '../atoms/canvas-data';
 import { canvasStore } from '../store';
 import { getAvailableVariableName } from '../util/get-available-util';
+import { removeConnectors } from './shared-actions/remove-connectors';
 import { toggleEdgeVisibilityOnInputVariableIdsChange } from './shared-actions/toggle-edge-visibility';
 import { updateNodeConfigInputVariableIds } from './shared-actions/update-node-config-connector-ids-field';
 
@@ -275,6 +278,96 @@ export function deleteLlmMessageConfig(params: DeleteLlmMessageConfigParams) {
    * NOTE: Always update the inputVariableIds
    */
   updateNodeConfigInputVariableIds(canvasDataDraft, params.nodeId);
+
+  const canvasData = finishDraft(canvasDataDraft);
+  canvasStore.set(canvasDataAtom, canvasData);
+}
+
+type AddEntryToTextareasWithOutputVariablesFieldConfigParams = {
+  nodeId: string;
+  fieldKey: string;
+  fieldIndex: number;
+};
+
+export function addEntryToTextareasWithOutputVariablesFieldConfig(
+  params: AddEntryToTextareasWithOutputVariablesFieldConfigParams,
+): void {
+  /**
+   * Prepare
+   */
+
+  const canvasDataDraft = createDraft(canvasStore.get(canvasDataAtom));
+
+  /**
+   * Stage update
+   */
+
+  const nodeConfigDraft = canvasDataDraft.nodeConfigs[params.nodeId];
+  const fieldConfigDraft = nodeConfigDraft.fields[params.fieldKey].configs[
+    params.fieldIndex
+  ] as NodeConfigTextareasWithOutputVariablesFieldConfig;
+
+  const outputVariable = createOutputVariable({
+    id: randomId(),
+    nodeId: params.nodeId,
+    name: getAvailableVariableName('output'),
+  });
+
+  canvasDataDraft.connectors[outputVariable.id] = outputVariable;
+
+  fieldConfigDraft.value.push({
+    string: '',
+    outputVariableId: outputVariable.id,
+  });
+
+  nodeConfigDraft.outputVariableIds.push(outputVariable.id);
+
+  /**
+   * Apply update
+   */
+
+  const canvasData = finishDraft(canvasDataDraft);
+  canvasStore.set(canvasDataAtom, canvasData);
+}
+
+type RemoveEntryFromTextareasWithOutputVariablesFieldConfigParams = {
+  nodeId: string;
+  fieldKey: string;
+  fieldIndex: number;
+  entryIndex: number;
+};
+
+export function removeEntryFromTextareasWithOutputVariablesFieldConfig(
+  params: RemoveEntryFromTextareasWithOutputVariablesFieldConfigParams,
+): void {
+  /**
+   * Prepare
+   */
+
+  const canvasDataDraft = createDraft(canvasStore.get(canvasDataAtom));
+
+  /**
+   * Stage update
+   */
+
+  const nodeConfigDraft = canvasDataDraft.nodeConfigs[params.nodeId];
+  const fieldConfigDraft = nodeConfigDraft.fields[params.fieldKey].configs[
+    params.fieldIndex
+  ] as NodeConfigTextareasWithOutputVariablesFieldConfig;
+  const entryDraft = fieldConfigDraft.value[params.entryIndex];
+
+  fieldConfigDraft.value.splice(params.entryIndex, 1);
+
+  const outputVariableIndex = nodeConfigDraft.outputVariableIds.findIndex(
+    (id) => id === entryDraft.outputVariableId,
+  );
+  nodeConfigDraft.outputVariableIds.splice(outputVariableIndex, 1);
+
+  removeConnectors(canvasDataDraft, [entryDraft.outputVariableId]);
+
+  /**
+   * Apply Update
+   */
 
   const canvasData = finishDraft(canvasDataDraft);
   canvasStore.set(canvasDataAtom, canvasData);

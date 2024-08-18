@@ -1,8 +1,9 @@
+import { z } from 'zod';
+
 import {
   CanvasConfigFieldDefinition,
   CanvasConfigFieldType,
 } from 'canvas-config-base';
-import { z } from 'zod';
 
 const OPEN_AI_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
   type: CanvasConfigFieldType.Secret,
@@ -14,7 +15,7 @@ const OPEN_AI_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
 
 const BING_SEARCH_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
   type: CanvasConfigFieldType.Secret,
-  label: 'API key',
+  label: 'Bing Search API key',
   placeholder: 'Enter API key here',
   helperText: "This is stored in your browser's local storage. Never uploaded.",
   schema: z.string().min(1, { message: 'Bing Search API key is required' }),
@@ -22,7 +23,7 @@ const BING_SEARCH_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
 
 const ELEVEN_LABS_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
   type: CanvasConfigFieldType.Secret,
-  label: 'API Key',
+  label: 'Eleven Labs API Key',
   placeholder: 'Enter API key here',
   helperText: "This is stored in your browser's local storage. Never uploaded.",
   schema: z.string().min(1, { message: 'ElevenLabs API Key is required' }),
@@ -30,7 +31,7 @@ const ELEVEN_LABS_API_KEY_DEFINITION: CanvasConfigFieldDefinition = {
 
 const HUGGINGFACE_API_TOKEN_DEFINITION = {
   type: CanvasConfigFieldType.Secret,
-  label: 'API Token',
+  label: 'Hugging Face API Token',
   placeholder: 'Enter API key here',
   helperText: "This is stored in your browser's local storage. Never uploaded.",
   schema: z.string().min(1, { message: 'HuggingFace API Token is required' }),

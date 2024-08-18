@@ -13,9 +13,12 @@ export enum NodeDefinitionConfigSectionKind {
 export enum NodeDefinitionConfigSectionUIType {
   StartNodeVariables = 'StartNodeVariables',
   FinishNodeVariables = 'FinishNodeVariables',
-  InputVariables = 'InputVariables',
   OutputVariables = 'OutputVariables',
   OutputConditionList = 'OutputConditionList',
+  /**
+   * TODO: Deprecate below tyle after evaluating usage
+   */
+  InputVariables = 'InputVariables',
 }
 
 export type NodeDefinitionUIConfigSection<_T = never, _K = never> = {

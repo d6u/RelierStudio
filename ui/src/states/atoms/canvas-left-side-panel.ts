@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { atomWithReset } from 'jotai/utils';
+import { atomWithReset, atomWithStorage } from 'jotai/utils';
 
 export enum LeftSidePanelType {
   AddNode = 'AddNode',
@@ -12,7 +12,12 @@ export enum LeftSidePanelType {
 export const canvasLeftSidePanelTypeAtom = atom<LeftSidePanelType>(
   LeftSidePanelType.AddNode,
 );
-export const canvasLeftSidePanelExpandedAtom = atom<boolean>(false);
+export const canvasLeftSidePanelExpandedAtom = atomWithStorage<boolean>(
+  'canvasLeftSidePanelExpandedAtom',
+  false,
+  undefined,
+  { getOnInit: true },
+);
 
 /**
  * Inspector panel
